@@ -1,0 +1,72 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/groups/public" }
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release' //needed for apply plugin: 'com.jfrog.artifactory'
+    }
+}
+
+group = artifactGroup
+version = artifactVersion
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+//standard source sets
+sourceSets {
+    main {
+        java { srcDir 'src/main/java' }
+        //groovy { srcDir 'src/main/groovy' }
+        resources.srcDir 'src/main/resources'
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        //groovy { srcDir 'src/test/groovy' }
+        resources.srcDir 'src/test/resources'
+    }
+}
+
+sourceCompatibility = 1.8
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE"
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url "https://oss.sonatype.org/content/groups/public" }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+
+    //for testing only
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+//task bootRun automatically works thanks to @SpringBootApplication
+
+//task Run needs this declaration
+mainClassName = "com.ycm.Application"
