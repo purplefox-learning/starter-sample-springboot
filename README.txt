@@ -1,4 +1,7 @@
-This sample application is the minimum set to get an spring boot application started
+This sample application is the minimum set to get an spring boot application started with the following features
+- web container
+- rest controller
+
 
 to compile-test, run "gradle test"
 to compile-test-build, run "gradle build"
