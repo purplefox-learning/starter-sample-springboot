@@ -13,7 +13,6 @@ buildscript {
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release' //needed for apply plugin: 'com.jfrog.artifactory'
     }
 }
 
@@ -45,7 +44,10 @@ sourceSets {
 }
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
+//BOM = Bill of Materials, which represents the dependencies chain
+//from the top packages that we explicitly declare in dependencies{} block
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE"
@@ -60,7 +62,12 @@ repositories {
 }
 
 dependencies {
+    //core spring boot (minimal set)
     compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    //core productivity
+    compile('org.projectlombok:lombok:1.16.10')
 
     //for testing only
     testCompile('org.springframework.boot:spring-boot-starter-test')
