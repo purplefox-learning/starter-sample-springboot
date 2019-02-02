@@ -24,7 +24,7 @@ apply plugin: 'groovy'
 
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+apply plugin: 'io.spring.dependency-management'
 
 group = artifactGroup
 version = artifactVersion
@@ -67,7 +67,8 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
 
     //core productivity
-    implementation('org.projectlombok:lombok:1.16.10')
+    implementation('org.projectlombok:lombok') //on intellij we need to install lombok plugin to support that
+    annotationProcessor('org.projectlombok:lombok')
 
     //core testing
     testImplementation('org.springframework.boot:spring-boot-starter-test')
@@ -76,4 +77,4 @@ dependencies {
 //task bootRun automatically works thanks to @SpringBootApplication
 
 //task Run needs this declaration
-mainClassName = "com.ycm.Application"
+mainClassName = 'com.ycm.Application'
